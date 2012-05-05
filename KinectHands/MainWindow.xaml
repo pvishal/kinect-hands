@@ -1,0 +1,22 @@
+﻿<Window x:Class="KinectHands.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Kinect Positioning" Height="502" Width="702" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers" Loaded="Window_Loaded" Closing="Window_Closing" ResizeMode="NoResize">
+    <Grid Width="680" Height="461" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <my:KinectSensorChooser HorizontalAlignment="Left" Margin="8,43,0,0" Name="kinectSensorChooser" VerticalAlignment="Top" Width="328" />
+        <Image Height="240" HorizontalAlignment="Left" Margin="12,12,0,0" Name="depthImageDisplay" Stretch="Fill" VerticalAlignment="Top" Width="320" />
+        <Slider Height="25" HorizontalAlignment="Left" Margin="12,320,0,0" Name="sliderMinDist" VerticalAlignment="Top" Width="245" Maximum="4096" Minimum="400" Value="400" TickFrequency="10" IsSelectionRangeEnabled="True" IsSnapToTickEnabled="True" />
+        <Slider Height="25" HorizontalAlignment="Left" Margin="12,372,0,0" Name="sliderMaxDist" VerticalAlignment="Top" Width="245" Minimum="400" Maximum="4096" Value="1500" TickFrequency="10" IsSnapToTickEnabled="True" IsSelectionRangeEnabled="True" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,302,0,0" Name="textMinDistance" Text="Minimum Distance (mm)" VerticalAlignment="Top" Width="150" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,354,0,0" Name="textBlock2" Text="Maximum Distance (mm)" VerticalAlignment="Top" Width="150" />
+        <TextBlock Height="23" Margin="276,321,0,0" Name="textMinDistVal" Text="0" VerticalAlignment="Top" TextAlignment="Center" HorizontalAlignment="Left" Width="40" />
+        <TextBlock HorizontalAlignment="Left" Margin="276,373,0,0" Name="textMaxDistVal" Text="0" Width="40" TextAlignment="Center" Height="24" VerticalAlignment="Top" />
+        <TextBlock Background="LightGray" Margin="12,263,0,0" Padding="10" Text="Settings" Name="textRange" HorizontalAlignment="Left" Width="320" Height="37" VerticalAlignment="Top" />
+        <TextBlock Background="LightGray" Height="37" HorizontalAlignment="Left" Margin="351,263,0,0" Name="textBlock1" Padding="10" Text="Results" VerticalAlignment="Top" Width="320" />
+        <TextBlock Height="26" HorizontalAlignment="Left" Margin="351,310,0,0" Name="textResult" Text="0 blobs detected." VerticalAlignment="Top" Width="193" />
+        <Image Height="240" HorizontalAlignment="Left" Margin="351,12,0,0" Name="procImageDisplay" Stretch="Fill" VerticalAlignment="Top" Width="320" />
+        <Slider Height="25" HorizontalAlignment="Left" IsSelectionRangeEnabled="True" IsSnapToTickEnabled="True" Margin="12,422,0,0" Maximum="30" Minimum="-30" Name="sliderTilt" TickFrequency="5" Value="0" VerticalAlignment="Top" Width="245" TickPlacement="BottomRight" />
+        <TextBlock HorizontalAlignment="Left" Margin="17,404,0,83" Name="textBlock3" Text="Kinect tilt" Width="56" />
+        <Button Content="Set" Height="34" HorizontalAlignment="Left" Margin="263,412,0,0" Name="buttonTilt" VerticalAlignment="Top" Width="65" Click="buttonTilt_Click" />
+    </Grid>
+</Window>
