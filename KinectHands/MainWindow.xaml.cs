@@ -22,8 +22,7 @@ namespace KinectHands
     public partial class MainWindow : Window
     {
 
-        BlobTracker blobsDetector = new BlobTracker();
-        QuadDetector quadDetector = new QuadDetector();
+        ImageProcessor quadDetector = new ImageProcessor();
 
         public MainWindow()
         {

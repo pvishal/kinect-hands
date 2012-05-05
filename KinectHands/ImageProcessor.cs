@@ -15,10 +15,10 @@ namespace KinectHands
     /// <summary>
     /// Functions to detect, highlight and track quadrilaterals
     /// </summary>
-    public class QuadDetector
+    public class ImageProcessor
     {
 
-        public QuadDetector()
+        public ImageProcessor()
         {
         }
 
