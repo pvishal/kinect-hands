@@ -7,7 +7,7 @@
         <TextBlock Background="LightGray" Margin="12,263,0,0" Padding="10" Text="Settings" Name="textRange" HorizontalAlignment="Left" Width="320" Height="37" VerticalAlignment="Top" />
         <TextBlock Background="LightGray" Height="37" HorizontalAlignment="Left" Margin="351,263,0,0" Name="textBlock1" Padding="10" Text="Results" VerticalAlignment="Top" Width="320" />
         <TextBlock Height="26" HorizontalAlignment="Left" Margin="351,324,0,0" Name="textResult" Text="0 blobs detected." VerticalAlignment="Top" Width="193" />
-        <Image Height="80" HorizontalAlignment="Left" Margin="351,12,0,0" Name="procImageDisplay" Stretch="Fill" VerticalAlignment="Top" Width="80" />
+        <Image Height="160" HorizontalAlignment="Left" Margin="351,12,0,0" Name="procImageDisplay" Stretch="Fill" VerticalAlignment="Top" Width="160" />
         <Slider Height="25" HorizontalAlignment="Left" IsSelectionRangeEnabled="True" IsSnapToTickEnabled="True" Margin="12,324,0,0" Maximum="30" Minimum="-30" Name="sliderTilt" TickFrequency="5" Value="0" VerticalAlignment="Top" Width="245" TickPlacement="BottomRight" />
         <TextBlock HorizontalAlignment="Left" Margin="17,404,0,83" Name="textBlock3" Text="Kinect tilt" Width="56" />
         <Button Content="Set" Height="34" HorizontalAlignment="Left" Margin="263,314,0,0" Name="buttonTilt" VerticalAlignment="Top" Width="65" Click="buttonTilt_Click" />

@@ -59,7 +59,10 @@ namespace KinectHands
             //g.DrawRectangle(redPen, roi);
             //g.DrawEllipse(redPen, x, y, 20, 20);
 
-            return outimage;
+            ResizeNearestNeighbor resizeFilter = new ResizeNearestNeighbor(160, 160);
+            Bitmap resizedImage = resizeFilter.Apply(outimage);
+
+            return resizedImage;
         }
 
 

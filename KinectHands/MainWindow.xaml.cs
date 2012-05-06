@@ -103,7 +103,7 @@ namespace KinectHands
                 int minDepth = 850;
                 int maxDepth = 4000;
 
-                System.Drawing.Bitmap outBmp = new System.Drawing.Bitmap(80, 80);
+                System.Drawing.Bitmap outBmp = new System.Drawing.Bitmap(160, 160);
                 BitmapSource depthBitmapSource;
                 BitmapSource processedBitmapSource;
 
@@ -137,7 +137,7 @@ namespace KinectHands
                 }
                 else
                 {
-                    textResult.Text = "A hand not yet detected";
+                    textResult.Text = "No hand detected";
 
                     //depthBitmapSource = sliceDepthImage(depthFrame, 850, 1500);
 
