@@ -92,6 +92,9 @@ namespace KinectHands
                     return;
                 }
 
+                int minDepth = 850;
+                int maxDepth = 4000;
+
                 if (sliderMinDist.Value > sliderMaxDist.Value)
                 {
                     sliderMinDist.Value = sliderMaxDist.Value;
@@ -100,15 +103,28 @@ namespace KinectHands
                 textMinDistVal.Text = sliderMinDist.Value.ToString();
                 textMaxDistVal.Text = sliderMaxDist.Value.ToString();
 
-                BitmapSource depthBitmapSource = sliceDepthImage(depthFrame, (int)sliderMinDist.Value, (int)sliderMaxDist.Value);
+                //Get the position of interest on the depthmap from skeletal tracking
+                DepthImagePoint rightHandPoint = jointTracker.GetJointPosition(kinectSensorChooser.Kinect, e, JointType.HandRight);
+                
+                int rightHandDepth = rightHandPoint.Depth;
+                if (rightHandDepth < 850)
+                {
+                    minDepth = 850;
+                    maxDepth = 1500;
+                }
+                else
+                {
+                    minDepth = rightHandDepth - 100;
+                    maxDepth = rightHandDepth + 100;
+                }
+
+                BitmapSource depthBitmapSource = sliceDepthImage(depthFrame, minDepth, maxDepth);
                 
                 //Create a bitmap from the depth information 
                 System.Drawing.Bitmap depthBmp = depthBitmapSource.ToBitmap();
                 System.Drawing.Bitmap outBmp = new System.Drawing.Bitmap(depthBmp.Width, depthBmp.Height);
 
-                //Get the position of interest on the depthmap from skeletal tracking
-                DepthImagePoint rightHandPoint = jointTracker.GetJointPosition(kinectSensorChooser.Kinect, e, JointType.HandRight);
-
+                
                 //Aforge performs image processing here.
                 outBmp = imageProcessor.ProcessFrame(depthBmp, rightHandPoint.X, rightHandPoint.Y);
 
@@ -157,7 +173,13 @@ namespace KinectHands
 
                 int depth = rawDepthData[depthIndex] >> DepthImageFrame.PlayerIndexBitmaskWidth;
 
-                if (depth <= minRange || depth > maxRange)
+                if (depth < 850 || depth > 4000)
+                {
+                    pixels[colorIndex + BlueIndex] = 0;
+                    pixels[colorIndex + GreenIndex] = 0;
+                    pixels[colorIndex + RedIndex] = 0;
+                }
+                else if (depth <= minRange || depth > maxRange)
                 {
                     pixels[colorIndex + BlueIndex] = 0;
                     pixels[colorIndex + GreenIndex] = 0;

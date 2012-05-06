@@ -7,6 +7,7 @@ using System.Drawing.Imaging;
 
 using AForge;
 using AForge.Imaging;
+using AForge.Imaging.Filters;
 using AForge.Math;
 using AForge.Math.Geometry;
 
@@ -29,9 +30,17 @@ namespace KinectHands
             Bitmap workingImage = new Bitmap(inputBitmap.Width, inputBitmap.Height);
             workingImage = AForge.Imaging.Image.Clone(inputBitmap, PixelFormat.Format24bppRgb);
 
+            // Create a mask for ROI selection
+            //Rectangle roi = new Rectangle(x - 70, y-70, 140, 140);
+
+            //Crop roicrop = new Crop(roi);
+            //Bitmap handImage = roicrop.Apply(workingImage);
+            
             Graphics g = Graphics.FromImage(workingImage);
             Pen redPen = new Pen(Color.Red, 2);
 
+            g.Clear(Color.Black);
+            //g.DrawImage(handImage, x, y);
             g.DrawEllipse(redPen, x, y, 20, 20);
 
             return workingImage;
