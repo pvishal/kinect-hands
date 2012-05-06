@@ -22,7 +22,8 @@ namespace KinectHands
     public partial class MainWindow : Window
     {
 
-        ImageProcessor quadDetector = new ImageProcessor();
+        ImageProcessor imageProcessor = new ImageProcessor();
+        JointTracker jointTracker = new JointTracker();
 
         public MainWindow()
         {
@@ -64,6 +65,7 @@ namespace KinectHands
 
             //turn on features that you need
             newSensor.DepthStream.Enable(DepthImageFormat.Resolution320x240Fps30);
+            newSensor.SkeletonStream.Enable();
 
             //sign up for events if you want to get at API directly
             newSensor.AllFramesReady += new EventHandler<AllFramesReadyEventArgs>(sensor_AllFramesReady);
@@ -104,9 +106,11 @@ namespace KinectHands
                 System.Drawing.Bitmap depthBmp = depthBitmapSource.ToBitmap();
                 System.Drawing.Bitmap outBmp = new System.Drawing.Bitmap(depthBmp.Width, depthBmp.Height);
 
+                //Get the position of interest on the depthmap from skeletal tracking
+                DepthImagePoint rightHandPoint = jointTracker.GetJointPosition(kinectSensorChooser.Kinect, e, JointType.HandRight);
+
                 //Aforge performs image processing here.
-                //outBmp = blobsDetector.ProcessFrame(depthBmp, trackMode);
-                outBmp = quadDetector.ProcessFrame(depthBmp);
+                outBmp = imageProcessor.ProcessFrame(depthBmp, rightHandPoint.X, rightHandPoint.Y);
 
                 //textResult.Text = blobsDetector.TotalBlobCount + " blobs detected.";
 

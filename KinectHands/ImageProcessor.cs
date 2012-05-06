@@ -13,7 +13,7 @@ using AForge.Math.Geometry;
 namespace KinectHands
 {
     /// <summary>
-    /// Functions to detect, highlight and track quadrilaterals
+    /// Performs the core image processing and creates the output image
     /// </summary>
     public class ImageProcessor
     {
@@ -22,40 +22,17 @@ namespace KinectHands
         {
         }
 
-        public Bitmap ProcessFrame(Bitmap inputBitmap)
+        public Bitmap ProcessFrame(Bitmap inputBitmap, int x, int y)
         {
-            BlobCounter blobCounter = new BlobCounter();
-
-            // Set the blob detection parameters
-            blobCounter.FilterBlobs = true;
-            blobCounter.MinHeight = 15;
-            blobCounter.MinWidth = 15;
-            blobCounter.MaxHeight = 100;
-            blobCounter.MaxWidth = 100;
-
+            
             // Create an image for AForge to process
             Bitmap workingImage = new Bitmap(inputBitmap.Width, inputBitmap.Height);
             workingImage = AForge.Imaging.Image.Clone(inputBitmap, PixelFormat.Format24bppRgb);
 
-            blobCounter.ProcessImage(workingImage);
-            Blob[] blobs = blobCounter.GetObjectsInformation();
-
-            SimpleShapeChecker shapeChecker = new SimpleShapeChecker();
-
             Graphics g = Graphics.FromImage(workingImage);
-            Pen yellowPen = new Pen(Color.Yellow, 2); // circles
             Pen redPen = new Pen(Color.Red, 2);
 
-            for (int i = 0, n = blobs.Length; i < n; i++)
-            {
-                List<IntPoint> edgePoints = blobCounter.GetBlobsEdgePoints(blobs[i]);
-                List<IntPoint> corners;
-
-                if (shapeChecker.IsQuadrilateral(edgePoints, out corners))
-                {
-                    g.DrawPolygon(redPen, ToPointsArray(corners));
-                }
-            }
+            g.DrawEllipse(redPen, x, y, 20, 20);
 
             return workingImage;
         }
