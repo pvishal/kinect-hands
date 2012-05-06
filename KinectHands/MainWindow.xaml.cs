@@ -63,9 +63,18 @@ namespace KinectHands
                 return;
             }
 
+            var parameters = new TransformSmoothParameters
+            {
+                Smoothing = 0.1f,
+                Correction = 0.0f,
+                Prediction = 0.0f,
+                JitterRadius = 1.0f,
+                MaxDeviationRadius = 0.5f
+            };
+
             //turn on features that you need
             newSensor.DepthStream.Enable(DepthImageFormat.Resolution320x240Fps30);
-            newSensor.SkeletonStream.Enable();
+            newSensor.SkeletonStream.Enable(parameters);
 
             //sign up for events if you want to get at API directly
             newSensor.AllFramesReady += new EventHandler<AllFramesReadyEventArgs>(sensor_AllFramesReady);
@@ -95,33 +104,50 @@ namespace KinectHands
                 int minDepth = 850;
                 int maxDepth = 4000;
 
+                System.Drawing.Bitmap outBmp = new System.Drawing.Bitmap(depthFrame.Width, depthFrame.Height);
+                BitmapSource depthBitmapSource;
+                BitmapSource processedBitmapSource;
+
                 //Get the position of interest on the depthmap from skeletal tracking
                 DepthImagePoint rightHandPoint = jointTracker.GetJointPosition(kinectSensorChooser.Kinect, e, JointType.HandRight);
-                
-                int rightHandDepth = rightHandPoint.Depth;
-                if (rightHandDepth < 850)
-                {
-                    minDepth = 850;
-                    maxDepth = 1500;
+
+
+                if (jointTracker.JointDetected == true)
+                {   
+                    textResult.Text = "Hand is being tracked ";
+
+                    int rightHandDepth = rightHandPoint.Depth;
+                    if (rightHandDepth < 850)
+                    {
+                        minDepth = 850;
+                        maxDepth = 1500;
+                    }
+                    else
+                    {
+                        minDepth = rightHandDepth - 100;
+                        maxDepth = rightHandDepth + 100;
+                    }
+
+                    depthBitmapSource = sliceDepthImage(depthFrame, minDepth, maxDepth);
+
+                    //Create a bitmap from the depth information 
+                    System.Drawing.Bitmap depthBmp = depthBitmapSource.ToBitmap();
+
+                    //Aforge performs image processing here.
+                    outBmp = imageProcessor.ProcessFrame(depthBmp, rightHandPoint.X, rightHandPoint.Y);
                 }
                 else
                 {
-                    minDepth = rightHandDepth - 100;
-                    maxDepth = rightHandDepth + 100;
+                    textResult.Text = "A hand not yet detected";
+
+                    depthBitmapSource = sliceDepthImage(depthFrame, 850, 1500);
+
+                    System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(outBmp);
+                    g.Clear(System.Drawing.Color.Black);
                 }
 
-                BitmapSource depthBitmapSource = sliceDepthImage(depthFrame, minDepth, maxDepth);
-                
-                //Create a bitmap from the depth information 
-                System.Drawing.Bitmap depthBmp = depthBitmapSource.ToBitmap();
-                System.Drawing.Bitmap outBmp = new System.Drawing.Bitmap(depthBmp.Width, depthBmp.Height);
-
-                
-                //Aforge performs image processing here.
-                outBmp = imageProcessor.ProcessFrame(depthBmp, rightHandPoint.X, rightHandPoint.Y);
-
                 //Create a bitmapsource to show the processed image
-                BitmapSource processedBitmapSource = outBmp.ToBitmapSource();
+                processedBitmapSource = outBmp.ToBitmapSource();
 
                 //Display the images
                 depthImageDisplay.Source = depthBitmapSource;

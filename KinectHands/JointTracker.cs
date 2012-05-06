@@ -11,7 +11,18 @@ namespace KinectHands
     {
         /// <summary>
         /// Provides skeleton and joint data
-        /// </summary>   
+        /// </summary>  
+
+
+        /// <summary>
+        /// Returns true if a tracked joint for interest has been detected
+        /// </summary>  
+        public bool JointDetected;
+
+        /// <summary>
+        /// Returns true if a tracked skeleton has been detected
+        /// </summary>
+        private bool SkeletonDetected;
 
         public JointTracker()
         {
@@ -21,8 +32,10 @@ namespace KinectHands
         {
             using (SkeletonFrame skeletonFrameData = e.OpenSkeletonFrame())
             {
+                SkeletonDetected = false;
+
                 if (skeletonFrameData == null)
-                {
+                {   
                     return null;
                 }
 
@@ -41,10 +54,10 @@ namespace KinectHands
                     if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
                     {
                         trackedSkeleton = skeleton;
+                        SkeletonDetected = true;
                         break;
                     }
                 }
-
 
                 return trackedSkeleton;
             }
@@ -56,13 +69,16 @@ namespace KinectHands
             Skeleton skeleton = GetTrackedSkeleton(e);
             DepthImagePoint depthPoint = new DepthImagePoint();
 
-            if (skeleton != null)
+            JointDetected = false;
+
+            if (SkeletonDetected == true)
             {
                 Joint joint = skeleton.Joints[jointType];
 
                 // Return the joint only if the joint is tracked, not inferred
                 if (joint.TrackingState == JointTrackingState.Tracked)
                 {
+                    JointDetected = true;
                     SkeletonPoint jointPoint = joint.Position;
                     depthPoint = sensor.MapSkeletonPointToDepth(jointPoint, DepthImageFormat.Resolution320x240Fps30);
                 }

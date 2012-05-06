@@ -40,7 +40,7 @@ namespace KinectHands
             Pen redPen = new Pen(Color.Red, 2);
 
             g.Clear(Color.Black);
-            //g.DrawImage(handImage, x, y);
+            //g.DrawImage(haosndImage, x, y);
             g.DrawEllipse(redPen, x, y, 20, 20);
 
             return workingImage;
