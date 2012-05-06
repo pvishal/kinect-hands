@@ -103,7 +103,7 @@ namespace KinectHands
                 int minDepth = 850;
                 int maxDepth = 4000;
 
-                System.Drawing.Bitmap outBmp = new System.Drawing.Bitmap(depthFrame.Width, depthFrame.Height);
+                System.Drawing.Bitmap outBmp = new System.Drawing.Bitmap(80, 80);
                 BitmapSource depthBitmapSource;
                 BitmapSource processedBitmapSource;
 

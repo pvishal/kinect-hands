@@ -34,17 +34,17 @@ namespace KinectHands
             Rectangle roi = new Rectangle(x - 30, y-30, 80, 80);
 
             Crop roicrop = new Crop(roi);
-            Bitmap handImage = roicrop.Apply(workingImage);
+            Bitmap outimage = roicrop.Apply(workingImage);
             
-            Graphics g = Graphics.FromImage(workingImage);
-            Pen redPen = new Pen(Color.Red, 2);
+            //Graphics g = Graphics.FromImage(workingImage);
+            //Pen redPen = new Pen(Color.Red, 2);
 
-            g.Clear(Color.Black);
-            g.DrawImage(handImage, x, y);
+            //g.Clear(Color.Black);
+            //g.DrawImage(handImage, x, y);
             //g.DrawRectangle(redPen, roi);
             //g.DrawEllipse(redPen, x, y, 20, 20);
 
-            return workingImage;
+            return outimage;
         }
 
 
