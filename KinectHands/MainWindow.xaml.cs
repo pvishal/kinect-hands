@@ -68,8 +68,8 @@ namespace KinectHands
                 Smoothing = 0.1f,
                 Correction = 0.0f,
                 Prediction = 0.0f,
-                JitterRadius = 1.0f,
-                MaxDeviationRadius = 0.5f
+                JitterRadius = 0.1f,
+                MaxDeviationRadius = 0.2f
             };
 
             //turn on features that you need
