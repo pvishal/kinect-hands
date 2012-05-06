@@ -139,7 +139,7 @@ namespace KinectHands
                 {
                     textResult.Text = "A hand not yet detected";
 
-                    depthBitmapSource = sliceDepthImage(depthFrame, 850, 1500);
+                    //depthBitmapSource = sliceDepthImage(depthFrame, 850, 1500);
 
                     System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(outBmp);
                     g.Clear(System.Drawing.Color.Black);
@@ -149,7 +149,6 @@ namespace KinectHands
                 processedBitmapSource = outBmp.ToBitmapSource();
 
                 //Display the images
-                depthImageDisplay.Source = depthBitmapSource;
                 procImageDisplay.Source = processedBitmapSource;
             }
         }

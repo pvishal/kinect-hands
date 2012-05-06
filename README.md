@@ -1,6 +1,8 @@
-# KinectHands: 
+# KinectHands
 
-KinectHands is a hand and fingertip dectection software with Microsoft Kinect
+Hand and fingertip dectection with Microsoft Kinect.    
+
+![Screenshot](https://github.com/pvishal/kinect-hands/raw/master/media/kinect-hands.png)  
 
 ## Dependencies
 -   AForge.NET Image Processing Libraries: http://www.aforgenet.com/   
