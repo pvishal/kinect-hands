@@ -58,8 +58,14 @@ namespace KinectHands
 
             if (skeleton != null)
             {
-                SkeletonPoint jointPoint = skeleton.Joints[jointType].Position;
-                depthPoint = sensor.MapSkeletonPointToDepth(jointPoint, DepthImageFormat.Resolution320x240Fps30);
+                Joint joint = skeleton.Joints[jointType];
+
+                // Return the joint only if the joint is tracked, not inferred
+                if (joint.TrackingState == JointTrackingState.Tracked)
+                {
+                    SkeletonPoint jointPoint = joint.Position;
+                    depthPoint = sensor.MapSkeletonPointToDepth(jointPoint, DepthImageFormat.Resolution320x240Fps30);
+                }
             }
 
             return depthPoint;
