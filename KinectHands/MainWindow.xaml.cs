@@ -95,14 +95,6 @@ namespace KinectHands
                 int minDepth = 850;
                 int maxDepth = 4000;
 
-                if (sliderMinDist.Value > sliderMaxDist.Value)
-                {
-                    sliderMinDist.Value = sliderMaxDist.Value;
-                }
-
-                textMinDistVal.Text = sliderMinDist.Value.ToString();
-                textMaxDistVal.Text = sliderMaxDist.Value.ToString();
-
                 //Get the position of interest on the depthmap from skeletal tracking
                 DepthImagePoint rightHandPoint = jointTracker.GetJointPosition(kinectSensorChooser.Kinect, e, JointType.HandRight);
                 
@@ -127,8 +119,6 @@ namespace KinectHands
                 
                 //Aforge performs image processing here.
                 outBmp = imageProcessor.ProcessFrame(depthBmp, rightHandPoint.X, rightHandPoint.Y);
-
-                //textResult.Text = blobsDetector.TotalBlobCount + " blobs detected.";
 
                 //Create a bitmapsource to show the processed image
                 BitmapSource processedBitmapSource = outBmp.ToBitmapSource();
