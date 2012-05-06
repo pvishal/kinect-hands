@@ -79,7 +79,6 @@ namespace KinectHands
             //sign up for events if you want to get at API directly
             newSensor.AllFramesReady += new EventHandler<AllFramesReadyEventArgs>(sensor_AllFramesReady);
 
-
             try
             {
                 newSensor.Start();
@@ -114,7 +113,7 @@ namespace KinectHands
 
                 if (jointTracker.JointDetected == true)
                 {   
-                    textResult.Text = "Hand is being tracked ";
+                    textResult.Text = "Right hand is being tracked";
 
                     int rightHandDepth = rightHandPoint.Depth;
                     if (rightHandDepth < 850)
@@ -124,8 +123,8 @@ namespace KinectHands
                     }
                     else
                     {
-                        minDepth = rightHandDepth - 100;
-                        maxDepth = rightHandDepth + 100;
+                        minDepth = rightHandDepth - 75;
+                        maxDepth = rightHandDepth + 75;
                     }
 
                     depthBitmapSource = sliceDepthImage(depthFrame, minDepth, maxDepth);

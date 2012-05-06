@@ -31,17 +31,18 @@ namespace KinectHands
             workingImage = AForge.Imaging.Image.Clone(inputBitmap, PixelFormat.Format24bppRgb);
 
             // Create a mask for ROI selection
-            //Rectangle roi = new Rectangle(x - 70, y-70, 140, 140);
+            Rectangle roi = new Rectangle(x - 30, y-30, 80, 80);
 
-            //Crop roicrop = new Crop(roi);
-            //Bitmap handImage = roicrop.Apply(workingImage);
+            Crop roicrop = new Crop(roi);
+            Bitmap handImage = roicrop.Apply(workingImage);
             
             Graphics g = Graphics.FromImage(workingImage);
             Pen redPen = new Pen(Color.Red, 2);
 
             g.Clear(Color.Black);
-            //g.DrawImage(haosndImage, x, y);
-            g.DrawEllipse(redPen, x, y, 20, 20);
+            g.DrawImage(handImage, x, y);
+            //g.DrawRectangle(redPen, roi);
+            //g.DrawEllipse(redPen, x, y, 20, 20);
 
             return workingImage;
         }
