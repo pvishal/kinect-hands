@@ -35,9 +35,24 @@ namespace KinectHands
 
             Crop roicrop = new Crop(roi);
             Bitmap outimage = roicrop.Apply(workingImage);
+
+            BlobCounter blobCounter = new BlobCounter();
+            blobCounter.ObjectsOrder = ObjectsOrder.Area;
             
-            //Graphics g = Graphics.FromImage(workingImage);
-            //Pen redPen = new Pen(Color.Red, 2);
+            Blob[] blobs;
+
+            // Find the blobs
+            blobCounter.ProcessImage(outimage);
+            blobs = blobCounter.GetObjectsInformation();
+            List<IntPoint> edgePoints = blobCounter.GetBlobsEdgePoints(blobs[0]);
+
+            GrahamConvexHull grahamScan = new GrahamConvexHull();
+            List<IntPoint> hullPoints = grahamScan.FindHull(edgePoints);
+
+            Graphics g = Graphics.FromImage(outimage);
+            Pen redPen = new Pen(Color.Red, 2);
+
+            g.DrawPolygon(redPen, ToPointsArray(hullPoints));
 
             //g.Clear(Color.Black);
             //g.DrawImage(handImage, x, y);
